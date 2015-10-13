@@ -1,0 +1,170 @@
+
+
+
+/*.butter {
+ color: yellow;
+}
+.brown-sugar {
+ color: brown;
+}
+.sugar {
+ color: white;
+}
+.pudding-powder {
+ color: powderblue;
+}
+.milk {
+ color: mintcream;
+}
+.vanilla-extract {
+ color: floralwhite;
+}
+.eggs {
+ color: antiquewhite;
+}
+.flour {
+ color: wheat;
+}
+.baking-soda {
+ color: lemonchiffon;
+}
+.salt {
+ color: seashell;
+}
+.choc-chips {
+ color: chocolate;
+}
+*/
+
+.title {
+  height:40px;
+  width: 600px;
+  background-color: purple;
+  border: 5px white solid;
+}
+/*
+.h1 {
+  text-color: white;
+  font-family: heltvica;
+  font-size: 12px;
+  background-color: lightblue;
+  text-color: black;
+} */
+
+
+#main {
+  height: 600px;
+  max-width: 800px;
+  background-color: red;
+  border: 30px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+nav {
+  height: 5%;
+  width: 100%;
+  background-color: green;
+}
+
+ul {
+    display: inline;
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+  display: inline;
+  margin: 0px 8px 0px 8px;
+}
+
+.leftframe {
+height: 68%;
+width: 20%;
+margin: 6px 0px 0px 0px;
+background-color: lightblue;
+float: left;
+}
+.rightframe {
+height: 68%;
+width: 20%;
+margin: 6px 0px 0px 0px;
+background-color: lightblue;
+float: right;
+}
+.square {
+  height: 15%;
+  width: 15%;
+  background-color: yellow;
+  margin: 6px 0px 0px 6px;
+  padding: 2px;
+  float: left;
+  position: relative;
+    top: +50px;
+    left: +32px;
+}
+.allsquares {
+
+}
+
+.square.one {
+  background-color: green;
+  float: left;
+  position: relative;
+}
+
+.square.two {
+  background-color: yellow;
+  float: left;
+  position: relative;
+}
+
+.square.three {
+  background-color: yellow;
+  float: left;
+  position: relative;
+}
+
+.square.four {
+  background-color: green;
+  float: left;
+  position: relative;
+}
+
+* {
+  text-align: center;
+  font-family: arial;
+  background-color: grey;
+}
+
+h1 {
+  /* color: rgb(149, 69, 53);  */
+  color: floralwhite;
+  font: 40px cursive;
+  border: 3px white solid;
+  margin:; 0px 0px 20px, 0px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 3px;
+}
+
+footer {
+  color:floralwhite;
+  width: 100%;
+  font: 20px;
+  text align: center;
+  background-color: brown;
+  height: 4%;
+  float: left;
+  margin: 10px;
+  position: relative;
+    left: -10px;
+}
+
+ul, ol {
+  list-style-position: inside;
+}
