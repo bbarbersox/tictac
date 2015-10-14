@@ -17,22 +17,29 @@
     </ul>
   </nav>
     <div class="leftframe">Player1
-      <input type="text" name="name" placeholder="Name"></input>
-      <input type="submit" value="Submit"></input>
+      <form id="register">
+        <input name="email" type="text" placeholder="email">
+        <input name="password" type="password" placeholder="password">
+        <input name="password_confirmation" type="password" placeholder="password confirmation">
+        <input name="register" type="submit" value="Register">
+      </form>
     </div>
     <div class="rightframe">Player2
       <input type="text" name="name" placeholder="Name"></input>
-      <input type="submit" value="Submit"></input>
+      <input type="text" name="email" placeholder="email address"></input>
+      <input type="text" name="password" placeholder="password"></input>
+      <input type="text" name="password confirmation" placeholder="password confirmation"></input>
+      <input type="submit" value="Join a game"></input>
     </div>
-    <div class="square one"><span class="text">1</span></div>
-    <div class="square two">2</div>
-    <div class="square three">5</div>
-    <div class="square four">13</div>
-    <div class="square five">34</div>
-    <div class="square six">89</div>
-    <div class="square seven">233</div>
-    <div class="square eight">610</div>
-    <div class="square nine">1597</div>
+    <div class="square one" data-num="1"></div>
+    <div class="square two" data-num="2"></div>
+    <div class="square three" data-num="5"></div>
+    <div class="square four" data-num="13"></div>
+    <div class="square five" data-num="34"></div>
+    <div class="square six" data-num="89"></div>
+    <div class="square seven" data-num="233"></div>
+    <div class="square eight" data-num="610"></div>
+    <div class="square nine" data-num="1597"></div>
     <footer>Sponsored by Crazy About Tic Tac Toe</footer>
 </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

@@ -1,41 +1,5 @@
 
 
-
-/*.butter {
- color: yellow;
-}
-.brown-sugar {
- color: brown;
-}
-.sugar {
- color: white;
-}
-.pudding-powder {
- color: powderblue;
-}
-.milk {
- color: mintcream;
-}
-.vanilla-extract {
- color: floralwhite;
-}
-.eggs {
- color: antiquewhite;
-}
-.flour {
- color: wheat;
-}
-.baking-soda {
- color: lemonchiffon;
-}
-.salt {
- color: seashell;
-}
-.choc-chips {
- color: chocolate;
-}
-*/
-
 .title {
   height:40px;
   width: 600px;
@@ -95,9 +59,11 @@ float: right;
 .square {
   height: 15%;
   width: 15%;
+  font-size: 80px;
   background-color: yellow;
   margin: 6px 0px 0px 6px;
   padding: 2px;
+  text-align: center;
   float: left;
   position: relative;
     top: +50px;
@@ -108,7 +74,7 @@ float: right;
 }
 
 .square.one {
-  background-color: green;
+  background-color: yellow;
   float: left;
   position: relative;
 }
@@ -126,7 +92,7 @@ float: right;
 }
 
 .square.four {
-  background-color: green;
+  background-color: yellow;
   float: left;
   position: relative;
 }
