@@ -5,165 +5,156 @@
 //
 
 var gameArray = ['', '', '', '', '', '', '', '', ''];  // reset the game board
-var numOfMoves = 0;      // reset number of moves made
+// var numOfMoves = 0;      // reset number of moves made
 var playerXMoveTotal = 0; // reset player X # of moves
 var playerYMoveTotal = 0; // reset player Y # of moves
 var moveTotal = 0;
 
-var gameInit = function gameInit(gameArray) {
-  moveTotal = 0;
-  numOfMoves = 0;
-  playerXMoveTotal = 0;
-  playerYMoveTotal = 0;
+/// hidden code
+  // var gameInit = function gameInit(gameArray) {
+  //   moveTotal = 0;
+  //   numOfMoves = 0;
+  //   playerXMoveTotal = 0;
+  //   playerYMoveTotal = 0;
 
-  // reset the board to nulls
-  $('.square').text(null);
+  //   // reset the board to nulls
+  //   $('.square').text(null);
 
-  // reenable the click handler on squares
-  // $('.square').on('click', squareClick());
-  // $('.square').on(squareClick);
-  // $('.sqaure').on();
+  //   // reenable the click handler on squares
+  //   // $('.square').on('click', squareClick());
+  //   // $('.square').on(squareClick);
+  //   // $('.sqaure').on();
 
-  // reset the game arrays to nulls
-  for (var i = 0; i < gameArray.length; i++) {
-    gameArray[i] = '';
-  };
-  return gameArray;
-};
+  //   // reset the game arrays to nulls
+  //   for (var i = 0; i < gameArray.length; i++) {
+  //     gameArray[i] = '';
+  //   };
+  //   return gameArray;
+  // };
 
 //
 // choose the first player to move
 //
 var currentPlayer = "X";
 
-if (Math.random() > .50) {
-  currentPlayer = "O";
+var squareClick, resetBoard;
+
+// if (Math.random() > .50) {
+//  currentPlayer = "O";
+// };
+
+// var moveValues = [1, 2, 5, 13, 34, 89, 233, 610, 1597];
+
+// var winningCombos = [8, 136, 247, 272, 646, 1632, 1691, 2440];
+
+var isWinner = function(player) {
+  return  (gameArray[0] === player && gameArray[1] === player && gameArray[2] === player ) ||
+          (gameArray[3] === player && gameArray[4] === player && gameArray[5] === player ) ||
+          (gameArray[6] === player && gameArray[7] === player && gameArray[8] === player ) ||
+          (gameArray[0] === player && gameArray[3] === player && gameArray[6] === player ) ||
+          (gameArray[1] === player && gameArray[4] === player && gameArray[7] === player ) ||
+          (gameArray[2] === player && gameArray[5] === player && gameArray[8] === player ) ||
+          (gameArray[0] === player && gameArray[4] === player && gameArray[8] === player ) ||
+          (gameArray[2] === player && gameArray[4] === player && gameArray[6] === player );
 };
 
-var moveValues = [1, 2, 5, 13, 34, 89, 233, 610, 1597];
+var checkWinner = function() {
+  if (isWinner(currentPlayer)) {
+    console.log(currentPlayer + ' has won this game');
+    alert(currentPlayer + ' has won the game');
+    resetBoard();
+  } else if (!movesLeft()) {
+    console.log('this game is a tie');
+    console.log('Hit start new game to play again');
+    alert("This game is a tie.  Let's play again!");
+    resetBoard();
+  } else {
+    // if nobody has won, switch current player
+    console.log("still in play; play swiching from " + currentPlayer);
+    if (currentPlayer === 'X') {
+      currentPlayer = 'O';
+    } else {
+      currentPlayer = 'X';
+    };
+    console.log("to " + currentPlayer);
+  }
+  return null;
+};
 
-var winningCombos = [8, 136, 247, 272, 646, 1632, 1691, 2440];
+var movesLeft = function() {
+  return gameArray.some(function(element){return element === '';});
+};
 
 $(document).ready(function() {
+  // create a user id
+  // $('.create').on('click', function() {
+  //   var playerXName = $("#name").val(name);
+  //   // var playerName = $(this).name.text("name");
+  //   // var playerEmail = $()
+  //   alert(playerName);
+  // })
+   //
+  // Process a player move
+  //
 
- // create a user id
-// $('.create').on('click', function() {
-//   var playerXName = $("#name").val(name);
-//   // var playerName = $(this).name.text("name");
-//   // var playerEmail = $()
-//   alert(playerName);
-// })
- //
-// Process a player move
-//
-
-
-  var squareClick = function(){
+  squareClick = function(){
     //    var moveValue = parseInt($(this).text());
     //    // if ($(this.hasClass('available'))) {
     var moveValue = $(this).data("num");
-
     var i = $(this).data("index");
 
+    if (gameArray[i] !== '' || isWinner("X") || isWinner("O") || !movesLeft()) {return;}
+
     gameArray[i] = currentPlayer;
+
     $(this).text(currentPlayer);
 
     // turn off the event handler for this square
-    $(this).off();
+    // $(this).off();
     //    $(this).off();
 
-    numOfMoves ++;
+    // numOfMoves++;
 
     // If at leaast one of the players has made at least
     // three moves check to see if the current player has
     // won the game
 
-    if (numOfMoves >= 5) {checkWinner(gameArray, currentPlayer, numOfMoves)};
+    checkWinner();
 
     //
     // ajax callout here to send move to server
     //
 
-    // switch current player to opponet
-    currentPlayer = (currentPlayer == 'O' ? 'X' : 'O');
-    // } else {
-    //   alert('This square is taken/  Please try again.');
-    // };
+    //    currentPlayer = (currentPlayer == 'O' ? 'X' : 'O');
+      // } else {
+      //   alert('This square is taken/  Please try again.');
+      // };
   };
 
-  $('.square').on('click', squareClick);
-
-  var resetBoard = function(){
-    moveTotal = 0;
-    numOfMoves = 0;
+  resetBoard = function(){
     playerXMoveTotal = 0;
     playerYMoveTotal = 0;
+    // numOfMoves = 0;
+    moveTotal = 0;
 
     // reset the board to nulls
     $('.square').text(null);
 
-    // reenable the click handler on squares
-    // $('.square').on('click', squareClick());
-    // $('.square').on(squareClick);
-    // $('.sqaure').on();
-
     // reset the game arrays to nulls
-    for (var i = 0; i < gameArray.length; i++) {
-      gameArray[i] = '';
-    };
-    $('.square').on('click', squareClick);
-    return gameArray;
+    gameArray = ['', '', '', '', '', '', '', '', ''];
+
+    // set the first player to move
+    currentPlayer = "X";
   };
 
-  // $().on('click', resetBoard); --- reset button logic
+  $(".square").on('click', squareClick);
+  // $('button').on('click', resetBoard); // reset button logic
 
 
-// }); --- used to close $(document).ready function
+  // }); --- used to close $(document).ready function
 
-// var checkWinner = function checkWinner(num1, num2, moves) {
-//  var winner = null;
-var checkWinner = function checkWinner(gameArray, player, moves) {
-  var winner = null;
-  if ((gameArray[0] === player && gameArray[1] === player && gameArray[2] === player ) ||
-    (gameArray[3] === player && gameArray[4] === player && gameArray[5] === player ) ||
-    (gameArray[6] === player && gameArray[7] === player && gameArray[8] === player ) ||
-     (gameArray[0] === player && gameArray[3] === player && gameArray[6] === player ) ||
-     (gameArray[1] === player && gameArray[4] === player && gameArray[7] === player ) ||
-     (gameArray[2] === player && gameArray[5] === player && gameArray[8] === player ) ||
-     (gameArray[0] === player && gameArray[4] === player && gameArray[8] === player ) ||
-     (gameArray[2] === player && gameArray[4] === player && gameArray[6] === player )) {
-    winner = player;
-    alert(winner + ' has won this game');
-    resetBoard(gameArray);
-  };
-
-if ((winner === null) && (moves === 9)) {
-    winner = 'tie';
-    alert('this game is a tie');
-    alert('Hit start new game to play again');
-    resetBoard(gameArray);
-  };
-  return winner;
-};
-
-  // for (var i = 0; i < winningCombos.length; i++) {
-  //   debugger
-  //   if (num1 === winningCombos[i]) {
-  //     debugger
-  //     winner = 'playerX';
-  //     alert('Player X is has won');
-  //     alert('Hit start new game to play again')
-  //   } else if (num2 === winningCombos[i]) {
-  //       debugger
-  //       winner = 'playerY';
-  //       alert('Player Y has won');
-  //       alert('WHit start new game to play again')
-  //     };
-  //     // else if (moves === 9) {
-  //     //   winner = 'tie';
-  //     //   alert('This game has ended in a tie');
-  //     // };
-  // };
+  // var checkWinner = function checkWinner(num1, num2, moves) {
+  //  var winner = null;
 
 });
 
