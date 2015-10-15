@@ -9,6 +9,17 @@ var gameArray = ['', '', '', '', '', '', '', '', ''];  // reset the game board
 var playerXMoveTotal = 0; // reset player X # of moves
 var playerYMoveTotal = 0; // reset player Y # of moves
 var moveTotal = 0;
+var token = null;
+var gameId = null;
+var moveData = {
+  "game": {
+    "cell": {
+      "index": 0,
+      "value": "x"
+    },
+    "over": false
+  }
+};
 
 /// hidden code
   // var gameInit = function gameInit(gameArray) {
@@ -60,14 +71,18 @@ var isWinner = function(player) {
 
 var checkWinner = function() {
   if (isWinner(currentPlayer)) {
+    moveData.game.over = 'true';
+    // ajax call goes here
     console.log(currentPlayer + ' has won this game');
     alert(currentPlayer + ' has won the game');
     resetBoard();
   } else if (!movesLeft()) {
-    console.log('this game is a tie');
-    console.log('Hit start new game to play again');
-    alert("This game is a tie.  Let's play again!");
-    resetBoard();
+      moveData.game.over = 'true';
+      // ajax call goes here
+      console.log('this game is a tie');
+      console.log('Hit start new game to play again');
+      alert("This game is a tie.  Let's play again!");
+      resetBoard();
   } else {
     // if nobody has won, switch current player
     console.log("still in play; play swiching from " + currentPlayer);
@@ -76,6 +91,8 @@ var checkWinner = function() {
     } else {
       currentPlayer = 'X';
     };
+    console.log('calling updateCell');
+    updateCell(token, gameId, moveData);
     console.log("to " + currentPlayer);
   }
   return null;
@@ -102,6 +119,11 @@ $(document).ready(function() {
     //    // if ($(this.hasClass('available'))) {
     var moveValue = $(this).data("num");
     var i = $(this).data("index");
+    console.log(moveData);
+    // moveData.game = gameId;
+    moveData.game.cell.index = i;
+    moveData.game.cell.value = currentPlayer;
+    console.log(moveData);
 
     if (gameArray[i] !== '' || isWinner("X") || isWinner("O") || !movesLeft()) {return;}
 
@@ -297,8 +319,8 @@ $(function() {
         return;
       }
       callback(null, data);
-      $('.token').val(data.user.token); // sets all forms a token value
-      console.log(data.user.token);
+      //$('.token').val(data.user.token); // sets all forms a token value
+      token = data.user.token;
     };
     e.preventDefault();
     tttapi.login(credentials, cb);
@@ -310,10 +332,20 @@ $(function() {
     tttapi.listGames(token, callback);
   });
 
+  var createGameCB = function createGameCB(err, data) {
+    console.log(data);
+    if (err) {
+      console.error(err);
+      return;
+    } else {
+      gameId = data.game.id;
+    }
+  }
+
   $('#create-game').on('submit', function(e) {
-    var token = $(this).children('[name="token"]').val();
+    //var token = $(this).children('[name="token"]').val();
     e.preventDefault();
-    tttapi.createGame(token, callback);
+    tttapi.createGame(token, createGameCB);
   });
 
   $('#show-game').on('submit', function(e) {
@@ -329,6 +361,15 @@ $(function() {
     e.preventDefault();
     tttapi.joinGame(id, token, callback);
   });
+
+  var updateCell = function updateCell(token, gameID, Data) {
+    // var token = $(this).children('[name="token"]').val();
+    // var id = $('#mark-id').val();
+    alert('we got here');
+    var data = wrap('game', wrap('cell', form2object(this)));
+    e.preventDefault();
+    tttapi.markCell(id, data, token, callback);
+  };
 
   $('#mark-cell').on('submit', function(e) {
     var token = $(this).children('[name="token"]').val();

@@ -42,6 +42,13 @@ li {
   margin: 0px 8px 0px 8px;
 }
 
+button {
+  height: 20%;
+  width: 40%;
+  margin: 60px;
+  float: left;
+}
+
 .leftframe {
 height: 68%;
 width: 20%;
