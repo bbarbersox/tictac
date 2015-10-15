@@ -15,18 +15,20 @@ var gameInit = function gameInit(gameArray) {
   numOfMoves = 0;
   playerXMoveTotal = 0;
   playerYMoveTotal = 0;
-  console.log(gameArray);
+
+  // reset the board to nulls
   $('.square').text(null);
-  $('.square').on('Click', squareClick());
+
+  // reenable the click handler on squares
+  // $('.square').on('click', squareClick());
+  // $('.square').on(squareClick);
+  // $('.sqaure').on();
+
+  // reset the game arrays to nulls
   for (var i = 0; i < gameArray.length; i++) {
     gameArray[i] = '';
   };
-  console.log(gameArray);
   return gameArray;
-};
-
-var moveInit = function moveInit (moveTotal) {
-   return moveTotal;
 };
 
 //
@@ -54,15 +56,22 @@ $(document).ready(function() {
  //
 // Process a player move
 //
- var squareClick = $('.square').on('click', function(){
-//    var moveValue = parseInt($(this).text());
+
+
+  var squareClick = function(){
+    //    var moveValue = parseInt($(this).text());
+    //    // if ($(this.hasClass('available'))) {
     var moveValue = $(this).data("num");
 
     var i = $(this).data("index");
 
     gameArray[i] = currentPlayer;
     $(this).text(currentPlayer);
+
+    // turn off the event handler for this square
     $(this).off();
+    //    $(this).off();
+
     numOfMoves ++;
 
     // If at leaast one of the players has made at least
@@ -77,10 +86,39 @@ $(document).ready(function() {
 
     // switch current player to opponet
     currentPlayer = (currentPlayer == 'O' ? 'X' : 'O');
+    // } else {
+    //   alert('This square is taken/  Please try again.');
+    // };
+  };
 
-  });
-});
+  $('.square').on('click', squareClick);
 
+  var resetBoard = function(){
+    moveTotal = 0;
+    numOfMoves = 0;
+    playerXMoveTotal = 0;
+    playerYMoveTotal = 0;
+
+    // reset the board to nulls
+    $('.square').text(null);
+
+    // reenable the click handler on squares
+    // $('.square').on('click', squareClick());
+    // $('.square').on(squareClick);
+    // $('.sqaure').on();
+
+    // reset the game arrays to nulls
+    for (var i = 0; i < gameArray.length; i++) {
+      gameArray[i] = '';
+    };
+    $('.square').on('click', squareClick);
+    return gameArray;
+  };
+
+  // $().on('click', resetBoard); --- reset button logic
+
+
+// }); --- used to close $(document).ready function
 
 // var checkWinner = function checkWinner(num1, num2, moves) {
 //  var winner = null;
@@ -96,13 +134,14 @@ var checkWinner = function checkWinner(gameArray, player, moves) {
      (gameArray[2] === player && gameArray[4] === player && gameArray[6] === player )) {
     winner = player;
     alert(winner + ' has won this game');
-    gameInit(gameArray);
+    resetBoard(gameArray);
   };
 
 if ((winner === null) && (moves === 9)) {
     winner = 'tie';
     alert('this game is a tie');
     alert('Hit start new game to play again');
+    resetBoard(gameArray);
   };
   return winner;
 };
@@ -126,7 +165,7 @@ if ((winner === null) && (moves === 9)) {
   //     // };
   // };
 
-
+});
 
 var tttapi = {
   gameWatcher: null,
