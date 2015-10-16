@@ -92,7 +92,7 @@ var checkWinner = function() {
       currentPlayer = 'X';
     };
     console.log('calling updateCell');
-    updateCell(token, gameId, moveData);
+   //  updateCell(token, gameId, moveData);
     console.log("to " + currentPlayer);
   }
   return null;
@@ -170,7 +170,8 @@ $(document).ready(function() {
   };
 
   $(".square").on('click', squareClick);
-  // $('button').on('click', resetBoard); // reset button logic
+
+  $('button').on('click', resetBoard); // reset button logic
 
 
   // }); --- used to close $(document).ready function
@@ -178,7 +179,7 @@ $(document).ready(function() {
   // var checkWinner = function checkWinner(num1, num2, moves) {
   //  var winner = null;
 
-});
+// });
 
 var tttapi = {
   gameWatcher: null,
@@ -362,14 +363,24 @@ $(function() {
     tttapi.joinGame(id, token, callback);
   });
 
-  var updateCell = function updateCell(token, gameID, Data) {
-    // var token = $(this).children('[name="token"]').val();
-    // var id = $('#mark-id').val();
-    alert('we got here');
-    var data = wrap('game', wrap('cell', form2object(this)));
-    e.preventDefault();
-    tttapi.markCell(id, data, token, callback);
-  };
+  // var updateCell = function updateCell(token, gameID, Data) {
+  //   // var token = $(this).children('[name="token"]').val();
+  //   // var id = $('#mark-id').val();
+  //   alert('we got here');
+  //   var data = wrap('game', wrap('cell', form2object(this)));
+  //   e.preventDefault();
+  //   tttapi.markCell(id, data, token, callback);
+  // };
+
+// $('.square').on('submit', function(e) {
+  //   alert('we got here');
+  //   var token = $(this).children('[name="token"]').val();
+  //   var id = $('#mark-id').val();
+  //   var data = wrap('game', wrap('cell', form2object(this)));
+  //   e.preventDefault();
+  //   tttapi.markCell(id, data, token, callback);
+  // });
+
 
   $('#mark-cell').on('submit', function(e) {
     var token = $(this).children('[name="token"]').val();
@@ -404,7 +415,7 @@ $(function() {
 
 });
 
-
+});
 
 // async.whilst(
 //   gameShouldContinue,

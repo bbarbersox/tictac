@@ -1,0 +1,137 @@
+
+
+.title {
+  height:40px;
+  width: 600px;
+  background-color: transparent;
+/*  border: 5px white solid;  */
+}
+
+#main {
+  height: 600px;
+  max-width: 800px;
+  background-image: url(../assets/sky-clouds-trees-moon.jpg);
+/*  border: 30px; */
+  margin: 0 auto;
+  padding: 50px;
+  border: none;
+  border-color: transparent;
+}
+
+/* input {
+  background-color: transparent;
+} */
+
+input {
+  border: none;
+  border-color: none;
+}
+
+input[type="text"], textarea {
+  background-color: transparent;
+  border: none;
+  border-color: transparent;
+
+}
+
+button {
+  height: 5%;
+  width: 20%;
+  margin: 10px;
+  float: left;
+  position: relative;
+    top: +18px;
+    left: +120px;
+}
+
+.leftframe {
+height: 44%;
+width: 20%;
+margin: 60px 0px 0px 0px;
+/* background-color: lightblue;  */
+background-color: transparent;
+float: left;
+}
+
+.rightframe {
+height: 44%;
+width: 20%;
+margin: 60px 0px 0px 0px;
+/* background-color: lightblue; */
+background-color: transparent;
+float: right;
+}
+
+.square {
+  height: 15%;
+  width: 15%;
+  font-size: 80px;
+  background-color: lightyellow;
+  margin: 6px 0px 0px 6px;
+  padding: 2px;
+  text-align: center;
+  float: left;
+  position: relative;
+    left: +32px;
+}
+
+.square.one {
+  float: left;
+  position: relative;
+}
+
+.square.two {
+  float: left;
+  position: relative;
+}
+
+.square.three {
+  float: left;
+  position: relative;
+}
+
+.square.four {
+  float: left;
+  position: relative;
+}
+
+* {
+  text-align: center;
+  font-family: arial;
+  background-color: grey;
+}
+
+h1 {
+  /* color: rgb(149, 69, 53);  */
+  color: floralwhite;
+  font: 40px cursive;
+  background-color: transparent;
+  /* border: 3px white solid; */
+  margin:; 0px 0px 20px, 0px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 3px;
+}
+
+footer {
+  color:floralwhite;
+  width: 100%;
+  font: 20px;
+  text align: center;
+  background-color: transparent;
+  height: 4%;
+  float: left;
+  margin: 10px;
+  position: relative;
+    top: 10px;
+    left: -10px;
+}
+
+ul, ol {
+  list-style-position: inside;
+  background-color: transparent;
+}
