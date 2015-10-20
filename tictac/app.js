@@ -11,44 +11,18 @@ var playerYMoveTotal = 0; // reset player Y # of moves
 var moveTotal = 0;
 var token = null;
 var gameId = null;
-var moveData = {
-  "game": {
-    "cell": {
-      "index": 0,
-      "value": "x"
-    },
-    "over": false
-  }
+var game = {
+      "cell": {
+        "index": 0,
+        "value": "x"
+      },
+      "owner": false
 };
-
-/// hidden code
-  // var gameInit = function gameInit(gameArray) {
-  //   moveTotal = 0;
-  //   numOfMoves = 0;
-  //   playerXMoveTotal = 0;
-  //   playerYMoveTotal = 0;
-
-  //   // reset the board to nulls
-  //   $('.square').text(null);
-
-  //   // reenable the click handler on squares
-  //   // $('.square').on('click', squareClick());
-  //   // $('.square').on(squareClick);
-  //   // $('.sqaure').on();
-
-  //   // reset the game arrays to nulls
-  //   for (var i = 0; i < gameArray.length; i++) {
-  //     gameArray[i] = '';
-  //   };
-  //   return gameArray;
-  // };
-
-//
-// choose the first player to move
-//
 var currentPlayer = "X";
 
 var squareClick, resetBoard;
+
+var updateCell;
 
 // if (Math.random() > .50) {
 //  currentPlayer = "O";
@@ -69,94 +43,71 @@ var isWinner = function(player) {
           (gameArray[2] === player && gameArray[4] === player && gameArray[6] === player );
 };
 
+// function to process winners, tie and on-going games
 var checkWinner = function() {
   if (isWinner(currentPlayer)) {
-    moveData.game.over = 'true';
-    // ajax call goes here
+    game.over = 'true';
+    // ajax call goes here to update server of move & win
+    // updateCell(token, gameId, game);
     console.log(currentPlayer + ' has won this game');
     alert(currentPlayer + ' has won the game');
+    // reset the board and start again
     resetBoard();
   } else if (!movesLeft()) {
       moveData.game.over = 'true';
-      // ajax call goes here
+      // ajax call goes here to update server of move & tie
       console.log('this game is a tie');
-      console.log('Hit start new game to play again');
       alert("This game is a tie.  Let's play again!");
+      // reset the board and start again
       resetBoard();
   } else {
     // if nobody has won, switch current player
-    console.log("still in play; play swiching from " + currentPlayer);
     if (currentPlayer === 'X') {
       currentPlayer = 'O';
     } else {
       currentPlayer = 'X';
     };
     console.log('calling updateCell');
-   //  updateCell(token, gameId, moveData);
+   // ajax call goes here to update server of the move
+   //  updateCell(token, gameId, game);
     console.log("to " + currentPlayer);
   }
   return null;
 };
 
+// use some method to check if there are untaken squares on the board
 var movesLeft = function() {
   return gameArray.some(function(element){return element === '';});
 };
 
 $(document).ready(function() {
-  // create a user id
-  // $('.create').on('click', function() {
-  //   var playerXName = $("#name").val(name);
-  //   // var playerName = $(this).name.text("name");
-  //   // var playerEmail = $()
-  //   alert(playerName);
-  // })
-   //
-  // Process a player move
-  //
 
   squareClick = function(){
-    //    var moveValue = parseInt($(this).text());
-    //    // if ($(this.hasClass('available'))) {
-    var moveValue = $(this).data("num");
-    var i = $(this).data("index");
-    console.log(moveData);
-    // moveData.game = gameId;
-    moveData.game.cell.index = i;
-    moveData.game.cell.value = currentPlayer;
-    console.log(moveData);
+    // this function processes a square that was clicked
+    var i = $(this).data("index"); // assign the suare's index to i
+    console.log(game);
 
+    // set cell index & cell value for the ajax call to server
+    game.cell.index = i;
+    game.cell.value = currentPlayer;
+
+    console.log(game);
+
+    // checks to see if a player has won
     if (gameArray[i] !== '' || isWinner("X") || isWinner("O") || !movesLeft()) {return;}
 
+    // game array is updated to reflect the move made
     gameArray[i] = currentPlayer;
 
+    // set the square to X or O
     $(this).text(currentPlayer);
 
-    // turn off the event handler for this square
-    // $(this).off();
-    //    $(this).off();
-
-    // numOfMoves++;
-
-    // If at leaast one of the players has made at least
-    // three moves check to see if the current player has
-    // won the game
-
+    // calls function to process the winner or tie or prepare the next move
     checkWinner();
-
-    //
-    // ajax callout here to send move to server
-    //
-
-    //    currentPlayer = (currentPlayer == 'O' ? 'X' : 'O');
-      // } else {
-      //   alert('This square is taken/  Please try again.');
-      // };
   };
 
   resetBoard = function(){
-    playerXMoveTotal = 0;
-    playerYMoveTotal = 0;
-    // numOfMoves = 0;
+    // this functions resets the game and game board to prepare for a new game
     moveTotal = 0;
 
     // reset the board to nulls
@@ -363,32 +314,34 @@ $(function() {
     tttapi.joinGame(id, token, callback);
   });
 
-  // var updateCell = function updateCell(token, gameID, Data) {
-  //   // var token = $(this).children('[name="token"]').val();
-  //   // var id = $('#mark-id').val();
-  //   alert('we got here');
-  //   var data = wrap('game', wrap('cell', form2object(this)));
-  //   e.preventDefault();
-  //   tttapi.markCell(id, data, token, callback);
-  // };
+   updateCell = function updateCell(token, gameID, game) {
+     // var token = $(this).children('[name="token"]').val();
+     // var id = $('#mark-id').val();
+     alert('we got to updateCell');
+     var data = wrap('game', wrap('cell', form2object(this)));
+     // e.preventDefault();
+     tttapi.markCell(id, data, token, callback);
+   };
 
-// $('.square').on('submit', function(e) {
-  //   alert('we got here');
+  // $('.square').on('click', function(e) {
+  //    alert('we got to mark-cell function');
+  //    // var token = $(this).children('[name="token"]').val();
+  //    // var id = $('#mark-id').val();
+  //    squareClick();
+  //    var data = wrap('game', wrap('cell', form2object(this)));
+  //    e.preventDefault();
+  //    tttapi.markCell(id, data, token, callback);
+  // });
+
+
+  // $('#mark-cell').on('submit', function(e) {
   //   var token = $(this).children('[name="token"]').val();
   //   var id = $('#mark-id').val();
+  //   alert('we got to mark-cell function');
   //   var data = wrap('game', wrap('cell', form2object(this)));
   //   e.preventDefault();
   //   tttapi.markCell(id, data, token, callback);
   // });
-
-
-  $('#mark-cell').on('submit', function(e) {
-    var token = $(this).children('[name="token"]').val();
-    var id = $('#mark-id').val();
-    var data = wrap('game', wrap('cell', form2object(this)));
-    e.preventDefault();
-    tttapi.markCell(id, data, token, callback);
-  });
 
   $('#watch-game').on('submit', function(e){
     var token = $(this).children('[name="token"]').val();
